@@ -1,38 +1,18 @@
 class Solution {
     public int findMin(int[] nums) {
-        if (nums.length == 1) {
-            return nums[0];
-        }
+        int left = 0;
+        int right = nums.length - 1;
 
-        // If the array is not rotated
-        if (nums[0] < nums[nums.length - 1]) {
-            return nums[0];
-        }
+        while (left < right) {
+            int mid = left + (right - left) / 2;
 
-        int start = 0;
-        int end = nums.length - 1;
-
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-
-            // Check if mid element is the minimum
-            if (mid > 0 && nums[mid] < nums[mid - 1]) {
-                return nums[mid];
-            }
-
-            // Check if mid+1 is the minimum
-            if (mid < nums.length - 1 && nums[mid] > nums[mid + 1]) {
-                return nums[mid + 1];
-            }
-
-            // Decide whether to go left or right
-            if (nums[start] <= nums[mid]) {
-                start = mid + 1;
+            if (nums[mid] <= nums[right]) {
+                right = mid;
             } else {
-                end = mid - 1;
+                left = mid + 1;
             }
         }
 
-        return -1; // Should never reach here if input is valid
+        return nums[left];        
     }
 }
